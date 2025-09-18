@@ -1,0 +1,55 @@
+# Dockerfile for Research Knowledge Graph
+# Multi-stage build for optimized production image
+
+# Build stage
+FROM python:3.11-slim as builder
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+# Production stage
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Create non-root user
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+
+# Copy Python dependencies from builder
+COPY --from=builder --chown=appuser:appuser /root/.local /home/appuser/.local
+
+# Copy application code
+COPY --chown=appuser:appuser . .
+
+# Create necessary directories
+RUN mkdir -p uploads static/data backups templates && \
+    chown -R appuser:appuser uploads static backups templates
+
+# Switch to non-root user
+USER appuser
+
+# Update PATH
+ENV PATH=/home/appuser/.local/bin:$PATH
+
+# Expose port
+EXPOSE 10000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:10000/api/health || exit 1
+
+# Start command
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:10000", "--workers", "2", "--timeout", "120", "--log-level", "info"]

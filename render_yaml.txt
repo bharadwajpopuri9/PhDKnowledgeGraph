@@ -1,0 +1,65 @@
+# Render Blueprint Configuration for Research Knowledge Graph
+# This file defines the infrastructure and services for deployment
+
+services:
+  # Web Service - Flask Application
+  - type: web
+    name: research-knowledge-graph
+    runtime: python
+    plan: free  # Can upgrade to 'starter' or 'standard' for production
+    
+    # Build configuration
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      mkdir -p uploads static/data backups templates
+    
+    # Start command
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    
+    # Environment variables
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: "False"
+      - key: MAX_UPLOAD_SIZE
+        value: "16777216"  # 16MB in bytes
+      - key: SECRET_KEY
+        generateValue: true  # Render will generate a secure random key
+      - key: ALLOWED_ORIGINS
+        value: "*"  # Configure for production with specific domains
+    
+    # Health check
+    healthCheckPath: /api/health
+    
+    # Auto-deploy from GitHub
+    autoDeploy: true  # Automatically deploy on push to repo
+    
+    # Static files configuration
+    staticPublishPath: ./static
+    
+    # Disk storage for persistent data (optional, requires paid plan)
+    # disk:
+    #   name: graph-data
+    #   mountPath: /opt/render/project/src/data
+    #   sizeGB: 1
+
+# Database service (optional - for future enhancements)
+# databases:
+#   - name: knowledge-graph-db
+#     plan: free
+#     databaseName: knowledgegraph
+#     user: graphuser
+
+# Background worker (optional - for async processing)
+# - type: worker
+#   name: graph-processor
+#   runtime: python
+#   buildCommand: pip install -r requirements.txt
+#   startCommand: python worker.py
+#   envVars:
+#     - key: PYTHON_VERSION
+#       value: "3.11"
