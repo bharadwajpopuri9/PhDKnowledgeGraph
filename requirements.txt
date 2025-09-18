@@ -1,5 +1,5 @@
 # Flask Research Synthesis Matrix Application
-# Compatible with Python 3.11.9 on Render
+# Compatible with Python 3.12.7 on Render
 
 # Core Flask application
 Flask==3.0.0
@@ -8,7 +8,7 @@ gunicorn==21.2.0
 Werkzeug==3.0.1
 
 # Data processing and analysis (Python 3.11 compatible versions)
-pandas>=2.0.3,<2.2.0
+pandas==2.2.3 #latest stable version that supports python 3.13
 numpy>=1.24.3,<1.26.0
 openpyxl>=3.1.2
 xlrd>=2.0.1
