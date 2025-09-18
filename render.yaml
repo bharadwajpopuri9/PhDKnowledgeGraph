@@ -5,10 +5,17 @@ services:
     region: oregon
     plan: free
     
-    buildCommand: pip install -r requirements.txt
+    # Install setuptools FIRST to avoid import errors
+    buildCommand: |
+      python --version
+      pip install --upgrade pip
+      pip install setuptools wheel
+      pip install -r requirements.txt
+    
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     
     envVars:
+      # Force Python 3.12 to avoid compatibility issues
       - key: PYTHON_VERSION
         value: 3.12.7
       - key: PYTHONUNBUFFERED
