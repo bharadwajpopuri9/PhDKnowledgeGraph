@@ -1,51 +1,26 @@
-# Flask Research Synthesis Matrix Application
-# Compatible with Python 3.12.7 on Render
+# requirements-with-constraints.txt
+# Install with: pip install -r requirements-with-constraints.txt -c constraints.txt
 
-# Build dependencies (add these first)
-setuptools==68.2.2
-wheel==0.41.3
-pip==23.3.1
+# Build tools
+setuptools>=68.0.0
+wheel>=0.41.0
 
-# Your actual dependencies
-pandas==2.2.3
-numpy==1.26.4
+# Core packages - no version pins, use constraints.txt
+pandas
+numpy
+openpyxl
+python-dateutil
 
-# Core Flask application
-Flask==3.0.0
-Flask-CORS==4.0.0
-gunicorn==21.2.0
-Werkzeug==3.0.1
+# Web
+flask
+gunicorn
 
-# Data processing and analysis (Python 3.11 compatible versions)
-pandas==2.2.3 #latest stable version that supports python 3.13
-numpy>=1.24.3,<1.26.0
-openpyxl>=3.1.2
-xlrd>=2.0.1
+# Data science - versions controlled by constraints.txt
+matplotlib
+seaborn
+scipy
+scikit-learn
 
-# Graph and network analysis
-networkx>=3.1,<3.3
-
-# Visualization and plotting
-plotly>=5.15.0,<5.18.0
-matplotlib>=3.7.0,<3.8.0
-seaborn>=0.12.0,<0.13.0
-
-# Machine learning (if needed for your research analysis)
-scikit-learn>=1.3.0,<1.4.0
-scipy>=1.11.0,<1.12.0
-
-# Text processing and NLP (for research paper analysis)
-nltk>=3.8.1
-textblob>=0.17.1
-
-# Utility libraries
-python-dateutil>=2.8.2
-pytz>=2023.3
-requests>=2.31.0
-urllib3>=1.26.16,<2.0.0
-
-# Development and debugging (optional, remove if not needed)
-python-dotenv>=1.0.0
-
-# Security updates
-certifi>=2023.7.22
+# Utilities
+python-dotenv
+requests

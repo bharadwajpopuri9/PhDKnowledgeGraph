@@ -6,7 +6,12 @@ services:
     plan: free  # or 'starter' for paid plan
     
     buildCommand: |
-      chmod +x build.sh && ./build.sh
+      echo "==> Attempting standard build..."
+      chmod +x build.sh && ./build.sh || {
+        echo "==> Standard build failed, trying with constraints..."
+        pip install --upgrade pip setuptools wheel
+        pip install -r requirements-with-constraints.txt -c constraints.txt
+      }
     
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     
