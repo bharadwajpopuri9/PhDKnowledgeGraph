@@ -7,7 +7,7 @@
 
 A powerful 3D interactive knowledge graph visualization tool for academic research synthesis matrices, specifically designed for metabolomics-based multi-cancer detection research. Transform your Excel-based literature reviews into explorable, three-dimensional networks that reveal hidden connections and research patterns.
 
-![Knowledge Graph Demo](https://via.placeholder.com/800x400.png?text=3D+Knowledge+Graph+Visualization)
+![Knowledge Graph Demo]([https://via.placeholder.com/800x400.png?text=3D+Knowledge+Graph+Visualization](https://bharadwajsphdknowledgegraph.onrender.com))
 
 ## ✨ Features
 
