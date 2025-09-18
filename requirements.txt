@@ -1,6 +1,15 @@
 # Flask Research Synthesis Matrix Application
 # Compatible with Python 3.12.7 on Render
 
+# Build dependencies (add these first)
+setuptools==68.2.2
+wheel==0.41.3
+pip==23.3.1
+
+# Your actual dependencies
+pandas==2.2.3
+numpy==1.26.4
+
 # Core Flask application
 Flask==3.0.0
 Flask-CORS==4.0.0
