@@ -1,26 +1,29 @@
-# requirements-with-constraints.txt
-# Install with: pip install -r requirements-with-constraints.txt -c constraints.txt
-
-# Build tools
+# Build dependencies - MUST BE FIRST
 setuptools>=68.0.0
 wheel>=0.41.0
+pip>=23.0
 
-# Core packages - no version pins, use constraints.txt
-pandas
-numpy
-openpyxl
-python-dateutil
+# Core dependencies - FLEXIBLE versions to avoid conflicts
+pandas>=2.0.0,<3.0.0
+numpy>=1.24.0,<1.26.0  # Respecting the constraint from your packages
+openpyxl>=3.0.0
+python-dateutil>=2.8.0
 
-# Web
-flask
-gunicorn
+# Web framework
+flask>=2.0.0
+werkzeug>=2.0.0
+gunicorn>=20.0.0
 
-# Data science - versions controlled by constraints.txt
-matplotlib
-seaborn
-scipy
-scikit-learn
+# Data analysis and visualization
+matplotlib>=3.5.0
+seaborn>=0.12.0
+scipy>=1.10.0
+scikit-learn>=1.2.0
 
 # Utilities
-python-dotenv
-requests
+python-dotenv>=0.19.0
+requests>=2.28.0
+
+# Add your specific dependencies below:
+# If you have packages that require specific numpy versions,
+# list them here and let pip resolve the conflicts
